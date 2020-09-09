@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="sketch.js"></script>
+    <script type="text/javascript" src="libraries/Tone.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+    .box {
+            display: inline-block;
+            width: 125px;
+            height: 125px;
+            margin: 25px;
+            border-radius: 10px;
+          }
+</style>
+    <title></title>
+  </head>
+  <body>
+    <div style="width:1080px;height:420px;" class="black" id='sampler'>
+
+    </div>
+    <form id="add-sample">
+      <input type="file" id="file">
+      <input type="text" id="sample-name">
+      <input type="submit" id='submit' value="Add Sample">
+    </form>
+  </body>
+</html>
