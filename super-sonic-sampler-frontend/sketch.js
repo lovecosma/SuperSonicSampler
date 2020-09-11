@@ -2,6 +2,26 @@ SAMPLES_URL = 'http://localhost:3000/samples'
 
 document.addEventListener('DOMContentLoaded', onLoad)
 const samples = []
+const sample_selection = () => document.getElementById("sample-selection")
+
+function getSamples(){
+  for (var i = 0; i < sample_selection().length; i++) {
+    sample_selection().remove(i)
+  }
+  fetch(SAMPLES_URL)
+  .then(resp => resp.json())
+  .then(json => renderSamples(json))
+}
+
+function renderSamples(samples){
+  samples.forEach((sample, i) => {
+    let option = document.createElement('option')
+    option.innerText = `${sample.id} ${sample.name}`
+    sample_selection().appendChild(option)
+  });
+}
+
+
 
 
 function onLoad(){
@@ -12,7 +32,9 @@ function onLoad(){
   const audio_sample = () => file().files[0]
   const file_input = () => document.getElementById('file')
   const sample_name = () => document.getElementById('sample-name')
+  const existing_sample_form = () => document.getElementById("select-sample")
   let numberOfSamples = 0
+  getSamples()
 
   form().addEventListener('submit', addSample)
 
@@ -28,7 +50,6 @@ function onLoad(){
     new_pad.innerText = sample_name().value
     sampler.appendChild(new_pad)
     const sample = new Tone.Player(audio_path, addEvent.bind(new_pad))
-
     submitData(new_pad.innerText, audio_file)
     samples.push(sample)
     form().reset()
@@ -47,29 +68,22 @@ function onLoad(){
 }
 
 function submitData(name, file){
-  let formData = {
-    name: name,
-    audio: file
-  };
-  debugger
-  let configObj = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify(formData)
-  };
+  let formData = new FormData()
+   formData.append('name', name)
+   formData.append('file', file)
 
-  return fetch(SAMPLES_URL, configObj)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(object) {
-      console.log(object);
-    })
-    .catch(function(object){
-
-    });
+     fetch(SAMPLES_URL, {
+        method: 'POST',
+        body: formData
+     })
+     .then(resp => resp.json())
+     .then(data => {
+        if (data.errors) {
+           alert(data.errors)
+        }
+        else {
+           console.log(data.url)
+        }
+      })
 
 }

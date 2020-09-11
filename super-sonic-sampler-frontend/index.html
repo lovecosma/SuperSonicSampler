@@ -22,9 +22,16 @@
 
     </div>
     <form id="add-sample">
-      <input type="file" id="file">
-      <input type="text" id="sample-name">
-      <input type="submit" id='submit' value="Add Sample">
+      <input type="file" id="file"><br>
+      <input name="name" type="text" id="sample-name" style="width: 300px;" placeholder="Name of Sample"><br>
+      <input type="submit" id='submit' value="Add New Sample">
+    </form>
+    <p>-OR-</p>
+    <form id="select-sample">
+      <select name="sample-selection" id="sample-selection" style="display: block; width: 300px;">
+
+      </select>
+      <input type="submit" id='submit' value="Add Previous Sample">
     </form>
   </body>
 </html>

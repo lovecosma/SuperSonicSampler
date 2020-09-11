@@ -3,9 +3,11 @@ class SamplesController < ApplicationController
 
   # GET /samples
   def index
+
     @samples = Sample.all
 
     render json: @samples
+
   end
 
   # GET /samples/1
@@ -15,8 +17,10 @@ class SamplesController < ApplicationController
 
   # POST /samples
   def create
-    binding.pry
+
     @sample = Sample.new(sample_params)
+    @sample.url = url_for(@sample.file)
+
 
     if @sample.save
       render json: @sample, status: :created, location: @sample
@@ -47,6 +51,6 @@ class SamplesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sample_params
-      params.require(:sample).permit(:name, :audio)
+      params.permit(:name, :file)
     end
 end
